@@ -198,7 +198,7 @@ class ConfigScreen(ConfigScreenInit, ConfigListScreen, Screen):
 		if answer:
 			for conf in self.config_list:
 				if conf[0] != self.section:
-					if hasattr(conf[1], type):
+					if hasattr(conf[1], "type"):
 						if conf[1].type == "preset":
 							config.plugins.moviecockpit.preset = ConfigText()
 							config.plugins.moviecockpit.preset.value = ""

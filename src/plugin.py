@@ -22,7 +22,7 @@
 import os
 from Debug import logger
 from __init__ import _
-from Version import VERSION
+from Version import ID, VERSION
 from Components.config import config
 from Plugins.Plugin import PluginDescriptor
 from Screens.InfoBar import InfoBar
@@ -41,8 +41,8 @@ import Standby
 from FileOpManager import FileOpManager
 from FileUtils import deleteFile, touchFile
 from ConfigInit import ConfigInit
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
-from Plugins.SystemPlugins.CockpitMountManager.MountManagerUtils import getBookmarkSpaceInfo
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
+from Plugins.SystemPlugins.MountCockpit.MountUtils import getBookmarkSpaceInfo
 
 
 def initBookmarks():
@@ -107,6 +107,7 @@ def autostart(reason, **kwargs):
 			elif launch_key == "startTimeshift":
 				InfoBar.startTimeshift = boundFunction(openMovieCockpit, session)
 			ConfigScreenInit.setEPGLanguage(config.plugins.moviecockpit.epglang)
+			MountCockpit.getInstance().registerBookmarks(ID, config.plugins.moviecockpit.bookmarks.value)
 			Recording()
 			FileCache.getInstance()
 			Trashcan.getInstance()
@@ -127,7 +128,6 @@ def Plugins(**__):
 	ConfigInit()
 	if not config.plugins.moviecockpit.bookmarks.value:
 		config.plugins.moviecockpit.bookmarks.value = initBookmarks()
-	MountManager.getInstance().registerBookmarks(config.plugins.moviecockpit.bookmarks.value)
 	if os.path.exists("/etc/enigma2/.mvc"):
 		createLogFile()
 	config.misc.standbyCounter.addNotifier(enteringStandby, initial_call=False)

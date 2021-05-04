@@ -23,13 +23,13 @@ from Debug import logger
 from xml.etree import ElementTree
 from datetime import datetime
 from Components.config import config
-from TreeBase import TreeBase
+from StyleTreeBase import StyleTreeBase
 from StyleItem import StyleItem
 
 
-class Style(TreeBase):
+class Style(StyleTreeBase):
 	def __init__(self, file_name=None):
-		TreeBase.__init__(self, file_name)
+		StyleTreeBase.__init__(self, file_name)
 
 	def checkDependency(self, _depend):
 		return

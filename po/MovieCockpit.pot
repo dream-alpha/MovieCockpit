@@ -4,7 +4,7 @@ msgstr ""
 "#-#-#-#-#  de.po  #-#-#-#-#\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-19 10:49+0100\n"
+"POT-Creation-Date: 2021-04-27 11:26+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: dream-alpha\n"
 "Language-Team: \n"
@@ -694,34 +694,22 @@ msgid "Select the tertiary language for audio."
 msgstr ""
 
 #: ConfigScreenInit.py:112
-msgid "MOUNT MANAGER"
-msgstr ""
-
-#: ConfigScreenInit.py:113
-msgid "Enable mount manager"
-msgstr ""
-
-#: ConfigScreenInit.py:113
-msgid "Select whether mount manager should be enabled."
-msgstr ""
-
-#: ConfigScreenInit.py:114
 msgid "DEBUG"
 msgstr ""
 
-#: ConfigScreenInit.py:115
+#: ConfigScreenInit.py:113
 msgid "Log level"
 msgstr ""
 
-#: ConfigScreenInit.py:115
+#: ConfigScreenInit.py:113
 msgid "Select debug log level."
 msgstr ""
 
-#: ConfigScreenInit.py:116
+#: ConfigScreenInit.py:114
 msgid "Log file path"
 msgstr ""
 
-#: ConfigScreenInit.py:116
+#: ConfigScreenInit.py:114
 msgid "Select the path to be used for the debug log file."
 msgstr ""
 
@@ -768,16 +756,16 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: FileCacheLoadProgress.py:37
+#: FileCacheLoadProgress.py:38
 msgid "File cache reload"
 msgstr ""
 
-#: FileCacheLoadProgress.py:48 FileOpManagerProgress.py:108
+#: FileCacheLoadProgress.py:49 FileOpManagerProgress.py:108
 #: MovieCoverDownloadProgress.py:54 FileProgress.py:145
 msgid "Please wait"
 msgstr ""
 
-#: FileCacheLoadProgress.py:55 MovieCoverDownloadProgress.py:68
+#: FileCacheLoadProgress.py:56 MovieCoverDownloadProgress.py:68
 msgid "Initializing"
 msgstr ""
 
@@ -842,78 +830,78 @@ msgstr ""
 msgid "Resume position at"
 msgstr ""
 
-#: MovieCockpit.py:199
+#: MovieCockpit.py:197
 msgid "No EPG info available"
 msgstr ""
 
-#: MovieCockpit.py:223 MovieCockpitActions.py:138 MovieCockpitContextMenu.py:87
+#: MovieCockpit.py:221 MovieCockpitActions.py:138 MovieCockpitContextMenu.py:87
 #: ConfigScreen.py:314
 msgid "Bookmarks"
 msgstr ""
 
-#: MovieCockpit.py:268 MovieList.py:356
+#: MovieCockpit.py:267 MovieList.py:356
 msgid "trashcan"
 msgstr ""
 
-#: MovieCockpit.py:268
+#: MovieCockpit.py:267
 msgid "Recordings"
 msgstr ""
 
-#: MovieCockpit.py:272 MovieCockpitActions.py:124
+#: MovieCockpit.py:271 MovieCockpitActions.py:124
 msgid "Sort mode"
 msgstr ""
 
-#: MovieCockpit.py:322
+#: MovieCockpit.py:321
 msgid "Video filex  does not exist"
 msgstr ""
 
-#: MovieCockpit.py:387
+#: MovieCockpit.py:386
 msgid "Do you really want to reload the SQL cache?"
 msgstr ""
 
-#: MovieCockpit.py:412 ConfigScreen.py:315
+#: MovieCockpit.py:411 ConfigScreen.py:315
 msgid "Select directory"
 msgstr ""
 
-#: MovieCockpit.py:446 MovieCockpitActions.py:98
+#: MovieCockpit.py:445 MovieCockpitActions.py:98
 msgid "Stop recording(s)"
 msgstr ""
 
-#: MovieCockpit.py:496
+#: MovieCockpit.py:495
 msgid "Permanently delete the selected video file(s) or dir(s)"
 msgstr ""
 
-#: MovieCockpit.py:534
+#: MovieCockpit.py:533
 msgid "Move file(s)"
 msgstr ""
 
-#: MovieCockpit.py:543
+#: MovieCockpit.py:542
 msgid "Copy file(s)"
 msgstr ""
 
-#: MovieCockpit.py:554
+#: MovieCockpit.py:553
 msgid "is not mounted"
 msgstr ""
 
-#: MovieCockpit.py:571
+#: MovieCockpit.py:570
 msgid "Can't move recordings"
 msgstr ""
 
-#: MovieCockpit.py:571
+#: MovieCockpit.py:570
 msgid "Can't copy recordings"
 msgstr ""
 
-#: MovieCockpit.py:591
+#: MovieCockpit.py:590
 msgid ""
 "Archive source and/or target directory does not exist, please configure "
 "directories in setup."
 msgstr ""
 
-#: MovieCockpit.py:605
+#: MovieCockpit.py:604
 msgid "Permanently delete all files in trashcan?"
 msgstr ""
 
-#: MovieCockpit.py:651
+#: MovieCockpit.py:650
 msgid "Not enough space in target directory for video file"
 msgstr ""
 
@@ -1046,7 +1034,7 @@ msgstr ""
 msgid "Timer list"
 msgstr ""
 
-#: MovieCockpitActions.py:144 MovieCockpitContextMenu.py:62 plugin.py:139
+#: MovieCockpitActions.py:144 MovieCockpitContextMenu.py:62 plugin.py:150
 msgid "Open setup"
 msgstr ""
 
@@ -1082,7 +1070,7 @@ msgstr ""
 msgid "Remove cutlist marker"
 msgstr ""
 
-#: MovieCockpitContextMenu.py:95 plugin.py:138 ConfigScreen.py:187
+#: MovieCockpitContextMenu.py:95 plugin.py:149 ConfigScreen.py:187
 msgid "Setup"
 msgstr ""
 
@@ -1244,7 +1232,7 @@ msgstr ""
 msgid "Recording(s) are in progress or coming up in few seconds!"
 msgstr ""
 
-#: plugin.py:153
+#: plugin.py:164
 msgid "Manage recordings"
 msgstr ""
 

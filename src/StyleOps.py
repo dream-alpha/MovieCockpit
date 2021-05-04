@@ -23,15 +23,15 @@ from Debug import logger
 import os
 from Components.config import config, ConfigText
 from Tools.Directories import fileExists
-from Skin import Skin
 from Style import Style
 from StyleConfigUtils import loadConfig
 from shutil import copy2
 from SkinUtils import getSkinPath
+from StyleSkin import StyleSkin
 
 
 def applyPluginStyle():
-	is_skin_styled = Skin.checkStyled(getSkinPath("skin.xml"))
+	is_skin_styled = checkStyled(getSkinPath("skin.xml"))
 	logger.info("is_skin_styled: %s", is_skin_styled)
 	if is_skin_styled:
 		loadStyleConfigFromSkin()
@@ -60,8 +60,8 @@ def loadStyleConfigFromSkin():
 
 def getSkinConfig(file_name):
 	logger.debug("file_name: %s", file_name)
-	if Skin.checkStyled(file_name):
-		skin = Skin(file_name)
+	if checkStyled(file_name):
+		skin = StyleSkin(file_name)
 		return skin.getConfig()
 	return dict()
 
@@ -75,7 +75,7 @@ def backupSkin():
 	if not os.path.exists(dst_path):
 		os.makedirs(dst_path)
 
-	if not fileExists(dst) or not Skin.checkStyled(src):
+	if not fileExists(dst) or not checkStyled(src):
 		logger.debug("backing up...")
 		copy2(src, dst)
 
@@ -110,7 +110,7 @@ def writeStyle(style, file_name):
 
 	backup = backupSkin()
 
-	skin = Skin(backup)
+	skin = StyleSkin(backup)
 # skin.user_mtime = getStyleUserFileMTime()
 
 # comparing = config.plugins.moviecockpit.debug.value
@@ -124,3 +124,15 @@ def writeStyle(style, file_name):
 # if comparing:
 	skin.write(file_name.replace(".xml", "_dst.xml"))
 	logger.debug("%s", str("#" * 80))
+
+
+def checkStyled(path):
+	line_count = 0
+	with open(path, "r") as f:
+		for line in f:
+			if "<style " in line:
+				return True
+			line_count += 1
+			if line_count > 10:
+				break
+	return False

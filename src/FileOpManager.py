@@ -20,6 +20,7 @@
 
 
 from Debug import logger
+from Version import ID
 import os
 from Components.config import config
 from FileCacheSQL import FILE_IDX_TYPE, FILE_IDX_PATH
@@ -29,7 +30,7 @@ from RecordingUtils import isRecording
 from Components.Task import Job, job_manager
 from FileOpManagerTask import FileOpManagerTask
 from FileOp import FileOp, FILE_OP_MOVE, FILE_OP_COPY
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
 
 instance = None
 
@@ -93,7 +94,7 @@ class FileOpManager(FileOp):
 
 	def doFileOp(self, file_op, path, target_dir, file_type, callback):
 		logger.debug("file_op: %s, path: %s, target_dir: %s, file_type: %s", file_op, path, target_dir, file_type)
-		if target_dir and (file_op == FILE_OP_COPY or (file_op == FILE_OP_MOVE and MountManager.getInstance().getMountPoint(target_dir) != MountManager.getInstance().getMountPoint(path))):
+		if target_dir and (file_op == FILE_OP_COPY or (file_op == FILE_OP_MOVE and MountCockpit.getInstance().getMountPoint(ID, target_dir) != MountCockpit.getInstance().getMountPoint(ID, path))):
 			self.addJob(file_op, path, target_dir, file_type, callback)
 		else:
 			self.execFileOp(file_op, path, target_dir, file_type, callback)

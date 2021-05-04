@@ -20,13 +20,14 @@
 
 
 from Debug import logger
+from Version import ID
 import os
 from pipes import quote
 from MovieCover import MovieCover
 from MovieTMDB import MovieTMDB
 from Shell import Shell
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
-from Plugins.SystemPlugins.CockpitMountManager.MountManagerUtils import getBookmarkSpaceInfo
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
+from Plugins.SystemPlugins.MountCockpit.MountUtils import getBookmarkSpaceInfo
 from FileCache import FileCache, FILE_TYPE_FILE, FILE_TYPE_DIR
 from FileUtils import createDirectory
 
@@ -61,7 +62,7 @@ class FileOp(MovieTMDB, MovieCover, Shell):
 			callback = [self.__deleteCallback, path, target_dir, file_type]
 		elif file_op == FILE_OP_MOVE:
 			free = size = 0
-			if os.path.dirname(path) != target_dir and MountManager.getInstance().getMountPoint(path) != MountManager.getInstance().getMountPoint(target_dir):
+			if os.path.dirname(path) != target_dir and MountCockpit.getInstance().getMountPoint(ID, path) != MountCockpit.getInstance().getMountPoint(ID, target_dir):
 				_used_percent, _used, free = getBookmarkSpaceInfo(target_dir)
 				_count, size = FileCache.getInstance().getCountSize(path)
 			logger.debug("FILE_OP_MOVE: size: %s, free: %s", size, free)
@@ -85,7 +86,7 @@ class FileOp(MovieTMDB, MovieCover, Shell):
 				error = FILE_OP_ERROR_NO_DISKSPACE
 		if cmds:
 			logger.debug("cmds: %s", cmds)
-			if file_op == FILE_OP_MOVE and MountManager.getInstance().getMountPoint(path) != MountManager.getInstance().getMountPoint(target_dir)\
+			if file_op == FILE_OP_MOVE and MountCockpit.getInstance().getMountPoint(ID, path) != MountCockpit.getInstance().getMountPoint(ID, target_dir)\
 				or file_op == FILE_OP_COPY and os.path.dirname(path) != target_dir:
 				# wait for cmds execution
 				self.executeShell((cmds, callback))
@@ -187,7 +188,7 @@ class FileOp(MovieTMDB, MovieCover, Shell):
 
 	def __changeFileOwner(self, path, target_dir):
 		cmds = []
-		if MountManager.getInstance().getMountPoint(target_dir) != MountManager.getInstance().getMountPoint(path):
+		if MountCockpit.getInstance().getMountPoint(ID, target_dir) != MountCockpit.getInstance().getMountPoint(ID, path):
 			# need to change file ownership to match target filesystem file creation
 			tfile = quote(target_dir + "/owner_test")
 			sfile = quote(path) + ".*"

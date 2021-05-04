@@ -23,26 +23,14 @@ from Debug import logger
 import os
 from xml.etree import ElementTree
 from datetime import datetime
-from TreeBase import TreeBase
+from StyleTreeBase import StyleTreeBase
 
 
-class Skin(TreeBase):
+class StyleSkin(StyleTreeBase):
 	def __init__(self, file_name=None):
 		logger.info("file_name: %s", file_name)
-		TreeBase.__init__(self, file_name)
+		StyleTreeBase.__init__(self, file_name)
 		self.read(file_name)
-
-	@staticmethod
-	def checkStyled(file_name):
-		line_count = 0
-		with open(file_name, "r") as f:
-			for line in f:
-				if "<style " in line:
-					return True
-				line_count += 1
-				if line_count > 10:
-					break
-		return False
 
 	def isStyled(self):
 		return self.style_node is not None
@@ -54,7 +42,7 @@ class Skin(TreeBase):
 		self.style_node = None
 		self.style_name = ""
 		self.user_mtime = ""
-		result = TreeBase.read(self, file_name)
+		result = StyleTreeBase.read(self, file_name)
 		logger.debug("result: %s", str(result))
 		if result:
 			test = self.root.findall("style")
@@ -71,7 +59,7 @@ class Skin(TreeBase):
 			self.applyAttributes(self.replaces)
 			logger.debug("file_name: %s, self.replaces: %s", file_name, self.replaces)
 			self.updateStyleInfo()
-			TreeBase.write(self, file_name + "~")
+			StyleTreeBase.write(self, file_name + "~")
 			logger.debug("file_name: %s", file_name)
 			os.rename(file_name + "~", file_name)
 

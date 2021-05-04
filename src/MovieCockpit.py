@@ -20,6 +20,7 @@
 
 
 from Debug import logger
+from Version import ID
 import os
 from __init__ import _
 from Components.config import config
@@ -55,7 +56,7 @@ from ConfigScreen import ConfigScreen
 from MovieCockpitActions import Actions
 from FileOpManager import FileOpManager
 from FileOpManagerProgress import FileOpManagerProgress
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
 from SkinUtils import getSkinName
 
 
@@ -223,9 +224,9 @@ class MovieCockpit(Screen, HelpableScreen, Actions):
 
 	def openBookmarksCallback(self, path):
 		logger.debug("path: %s", path)
-		MountManager.getInstance().onMountsChange()
+		MountCockpit.getInstance().registerBookmarks(ID, config.plugins.moviecockpit.bookmarks.value)
 		current_dir = self.movie_list.getCurrentDir()
-		mount_point = MountManager.getInstance().getMountPoint(current_dir)
+		mount_point = MountCockpit.getInstance().getMountPoint(ID, current_dir)
 		if not mount_point:
 			current_dir = FileCache.getInstance().getHomeDir()
 		self.movie_list.loadList(current_dir, self.return_path)
@@ -470,14 +471,14 @@ class MovieCockpit(Screen, HelpableScreen, Actions):
 		self.recordings_to_stop = []
 		selection_list = self.movie_list.getSelectionList()
 		for path in selection_list:
-			logger.debug("%s", path)
+			logger.debug("path: %s", path)
 			file_type = getFile4Path(self.movie_list.file_list, path)[FILE_IDX_TYPE]
 			directory = os.path.dirname(path)
 			if not config.plugins.moviecockpit.trashcan_enable.value or os.path.basename(directory) == "trashcan":
 				self.file_ops_list.append((FILE_OP_DELETE, path, None, file_type))
 				self.file_delete_list.append(path)
 			else:
-				trashcan_path = MountManager.getInstance().getBookmark(path) + "/trashcan"
+				trashcan_path = MountCockpit.getInstance().getBookmark(ID, path) + "/trashcan"
 				self.file_ops_list.append((FILE_OP_MOVE, path, trashcan_path, file_type))
 				self.file_move_list.append(path)
 
@@ -547,7 +548,7 @@ class MovieCockpit(Screen, HelpableScreen, Actions):
 	def selectedTargetDir(self, file_op, target_dir):
 		logger.debug("...")
 		if target_dir:
-			if not MountManager.getInstance().getMountPoint(target_dir):
+			if not MountCockpit.getInstance().getMountPoint(ID, target_dir):
 				self.session.open(
 					MessageBox,
 					target_dir + " " + _("is not mounted"),
@@ -663,6 +664,4 @@ class MovieCockpit(Screen, HelpableScreen, Actions):
 ### bookmark utils
 
 	def getBookmarksSpaceInfo(self):
-		bookmarks = config.plugins.moviecockpit.bookmarks.value
-		space_info = MountManager.getInstance().getBookmarksSpaceInfo(bookmarks)
-		return space_info
+		return MountCockpit.getInstance().getBookmarksSpaceInfo(ID)

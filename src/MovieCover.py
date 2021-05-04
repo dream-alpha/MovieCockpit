@@ -20,11 +20,12 @@
 
 
 from Debug import logger
+from Version import ID
 import os
 from Components.config import config
 from SkinUtils import getSkinPath
 from PixmapDisplay import PixmapDisplay
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
 
 
 class MovieCover(PixmapDisplay):
@@ -34,7 +35,7 @@ class MovieCover(PixmapDisplay):
 
 	def getCoverPath(self, path):
 		logger.debug("path: %s", path)
-		bookmarks = MountManager.getInstance().getMountedBookmarks(config.plugins.moviecockpit.bookmarks.value)
+		bookmarks = MountCockpit.getInstance().getMountedBookmarks(ID)
 		cover_path = os.path.splitext(path)[0] + ".jpg"
 		if config.plugins.moviecockpit.cover_flash.value:
 			for bookmark in bookmarks:

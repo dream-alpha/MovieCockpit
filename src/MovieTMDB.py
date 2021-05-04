@@ -20,6 +20,7 @@
 
 
 from Debug import logger
+from Version import ID
 import os
 import json
 from urllib2 import Request, urlopen, quote
@@ -28,7 +29,7 @@ from __init__ import _
 from time import sleep
 from Components.config import config
 from FileUtils import readFile, writeFile, deleteFile
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
 
 
 SELECTION_ID = 1	# tmdb movie id
@@ -47,7 +48,7 @@ class MovieTMDB():
 		logger.debug("path: %s", path)
 		info_path = os.path.splitext(path)[0] + ".txt"
 		if config.plugins.moviecockpit.cover_flash.value:
-			bookmark = MountManager.getInstance().getBookmark(info_path)
+			bookmark = MountCockpit.getInstance().getBookmark(ID, info_path)
 			if bookmark:
 				info_path = config.plugins.moviecockpit.cover_bookmark.value + info_path[len(bookmark):]
 		logger.debug("info_path: %s", info_path)

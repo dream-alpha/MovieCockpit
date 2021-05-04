@@ -26,7 +26,6 @@ from enigma import eTimer
 from FileProgress import FileProgress
 from FileOp import FILE_OP_DELETE, FILE_OP_MOVE, FILE_OP_COPY
 from FileOpManager import FileOpManager
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
 
 ACTIVITY_TIMER_DELAY = 1000
 
@@ -46,7 +45,6 @@ class FileOpManagerProgress(FileProgress):
 
 	def onDialogShow(self):
 		logger.debug("...")
-		MountManager.getInstance().startPolling()
 		self.execFileOpManagerProgress()
 
 	def cancel(self):
@@ -59,7 +57,6 @@ class FileOpManagerProgress(FileProgress):
 
 	def exit(self):
 		if self.cancelled or not self.total_files:
-			MountManager.getInstance().stopPolling()
 			logger.debug("close")
 			self.close()
 

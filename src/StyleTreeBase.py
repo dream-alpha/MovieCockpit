@@ -24,7 +24,7 @@ import os
 from xml.etree import ElementTree
 
 
-class TreeBase():
+class StyleTreeBase():
 	def __init__(self, file_name=None):
 		#logger.info("...")
 		self.read(file_name)

@@ -28,7 +28,7 @@ from Components.Sources.List import List
 from Components.PluginComponent import plugins
 from Screens.Screen import Screen
 from Components.Sources.StaticText import StaticText
-from Plugins.SystemPlugins.CockpitMountManager.MountManager import MountManager
+from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
 from FileCache import FileCache
 from MovieList import MovieList
 from Screens.HelpMenu import HelpableScreen
@@ -68,7 +68,7 @@ class MovieCockpitContextMenu(Screen, HelpableScreen):
 		if self.menu_mode == MENU_FUNCTIONS:
 			self.setTitle(_("Select function"))
 
-			if self.current_dir and not MountManager.getInstance().isBookmark(os.path.realpath(self.current_dir)):
+			if self.current_dir and not MountCockpit.getInstance().isBookmark(os.path.realpath(self.current_dir)):
 				menu.append((_("Home"), (boundFunction(self.csel.changeDir, FileCache.getInstance().getHomeDir()), True)))
 				menu.append((_("Directory up"), (boundFunction(self.csel.changeDir, self.current_dir + "/.."), True)))
 
