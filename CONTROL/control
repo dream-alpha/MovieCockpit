@@ -1,0 +1,6 @@
+Description: MovieCockpit
+Maintainer: dream-alpha
+Package: enigma2-plugin-extensions-moviecockpit
+Version: 17.9.5
+Architecture: all
+Depends: python-requests, enigma2-plugin-systemplugins-componentscockpit, enigma2-plugin-systemplugins-mountcockpit, enigma2-plugin-systemplugins-cachecockpit, enigma2-plugin-systemplugins-socketcockpit

@@ -1,0 +1,2 @@
+	<widget alphatest="blend" name="pic_loading" position="560,422" size="100,100" zPosition="3"/>
+	<widget enableWrapAround="1" itemHeight="45" name="list" position="10,90" scrollbarMode="showAlways" scrollbarWidth="5" size="1200,765"/>
