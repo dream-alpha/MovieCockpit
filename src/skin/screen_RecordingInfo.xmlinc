@@ -6,8 +6,8 @@
 			<convert type="TemplatedMultiContent">
 				{
 				"template": [
-					MultiContentEntryText(pos=(5,0), size=(340,40), flags=RT_VALIGN_CENTER, text=0),
-					MultiContentEntryText(pos=(400,0), size=(1380,40), flags=RT_VALIGN_CENTER, text=1),
+					MultiContentEntryText(pos=(5,0), size=(360,40), flags=RT_VALIGN_CENTER, text=0),
+					MultiContentEntryText(pos=(420,0), size=(1360,40), flags=RT_VALIGN_CENTER, text=1),
 				],
 				"fonts": [gFont("Regular",30)],
 				"itemHeight":40

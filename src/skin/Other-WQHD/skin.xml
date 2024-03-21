@@ -192,7 +192,7 @@
 			<convert type="ClockToText">Default</convert>
 		</widget>
 		<widget enableWrapAround="1" position="13,133" render="Listbox" scrollbarMode="showOnDemand" size="2373,1067" source="list">
-			<convert type="TemplatedMultiContent">{"template":[MultiContentEntryText(pos=(7,0),size=(453,53),flags=RT_VALIGN_CENTER,text=0),MultiContentEntryText(pos=(533,0),size=(1840,53),flags=RT_VALIGN_CENTER,text=1),],"fonts":[gFont("Regular",40)],"itemHeight":53}</convert>
+			<convert type="TemplatedMultiContent">{"template":[MultiContentEntryText(pos=(7,0),size=(480,53),flags=RT_VALIGN_CENTER,text=0),MultiContentEntryText(pos=(560,0),size=(1813,53),flags=RT_VALIGN_CENTER,text=1),],"fonts":[gFont("Regular",40)],"itemHeight":53}</convert>
 		</widget>
 	</screen>
 	<screen backgroundColor="#ff000000" flags="wfNoBorder" name="MVCBufferingProgress" position="center,center" size="133,133">

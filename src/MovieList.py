@@ -39,7 +39,7 @@ from .CutListUtils import ptsToSeconds, getCutListLast
 from .SkinUtils import getSkinPath
 from .FileManagerUtils import FILE_TYPE_FILE, FILE_TYPE_DIR, FILE_TYPE_LINK, FILE_TYPE_DELETED
 from .FileManagerUtils import FILE_IDX_TYPE, FILE_IDX_DIR, FILE_IDX_PATH, FILE_IDX_FILENAME, FILE_IDX_NAME, FILE_IDX_EVENT_START_TIME, FILE_IDX_LENGTH, FILE_IDX_DESCRIPTION, FILE_IDX_SERVICE_REFERENCE, FILE_IDX_CUTS
-from .FileManagerUtils import FILE_OP_COPY, FILE_OP_MOVE, FILE_OP_DELETE
+from .FileManagerUtils import file_op_msg
 from .FileUtils import readFile
 from .MovieListParseTemplate import parseTemplate
 from .ConfigInit import sort_modes
@@ -70,7 +70,7 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 
 		self.show_deleted_movies = False
 		self.show_directories = False
-		self.recursively = False
+		self.recursive = False
 		self.list_content = config.plugins.moviecockpit.list_content.value
 		self.setListContent()
 
@@ -121,17 +121,17 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 	def setListContent(self):
 		config.plugins.moviecockpit.list_content.value = self.list_content
 		config.plugins.moviecockpit.list_content.save()
-		self.show_directories = self.recursively = False
+		self.show_directories = self.recursive = False
 		if self.list_content == 0:
 			self.show_directories = False
-			self.recursively = False
+			self.recursive = False
 		elif self.list_content == 1:
 			self.show_directories = True
-			self.recursively = False
+			self.recursive = False
 		elif self.list_content == 2:
 			self.show_directories = False
-			self.recursively = True
-		logger.debug("list_content: %s, show_directories: %s, recursively: %s", self.list_content, self.show_directories, self.recursively)
+			self.recursive = True
+		logger.debug("list_content: %s, show_directories: %s, recursive: %s", self.list_content, self.show_directories, self.recursive)
 
 	def nextListContent(self):
 		self.list_content = self.list_content + 1 if self.list_content < 2 else 0
@@ -276,9 +276,8 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 		return afile
 
 	def getFileIndex(self, path):
-		index = -1
-		if path in self.file_list_index:
-			index = self.file_list_index[path]
+		logger.info("path: %s", path)
+		index = self.file_list_index.get(path, -1)
 		return index
 
 	def getCurrentIndex(self):
@@ -318,7 +317,7 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 		self.load_dir = load_dir
 		if load_dir is None:
 			self.load_dir = self.getCurrentDir()
-		if self.recursively and "trashcan" not in self.load_dir:
+		if self.recursive and "trashcan" not in self.load_dir:
 			self.load_dir = MountCockpit.getInstance().getHomeDir(ID)
 		if selection_path is None:
 			selection_path = self.getCurrentPath()
@@ -336,26 +335,25 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 			top_level = True
 			if config.plugins.moviecockpit.trashcan_show.value:
 				trashcan_dir = os.path.join(self.load_dir, "trashcan")
-				trashcan = FileManager.getInstance().newDirData(trashcan_dir, FILE_TYPE_DIR)
-				trashcan_list = list(trashcan)
-				trashcan_list[FILE_IDX_NAME] = _("trashcan")
-				header_list.append(tuple(trashcan_list))
+				trashcan_file = list(FileManager.getInstance().newDirData(trashcan_dir, FILE_TYPE_DIR))
+				trashcan_file[FILE_IDX_NAME] = _("trashcan")
+				header_list.append(tuple(trashcan_file))
 		else:
 			top_level = False
 			up_dir = os.path.join(self.load_dir, "..")
 			up = FileManager.getInstance().newDirData(up_dir, FILE_TYPE_DIR)
 			header_list.append(up)
-		all_load_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [self.load_dir])
 		if self.show_directories:  # or os.path.basename(self.load_dir) == "trashcan":
-			dir_list = FileManager.getInstance().getMovieDirList(all_load_dirs, top_level)
+			dir_list = FileManager.getInstance().getMovieDirList(self.load_dir, top_level)
 			header_list += self.sortList(dir_list, "alpha", False)
-		file_list = FileManager.getInstance().getMovieFileList(all_load_dirs, top_level, self.recursively)
+		file_list = FileManager.getInstance().getMovieFileList(self.load_dir, top_level, self.recursive)
 		if self.show_deleted_movies:
-			file_list += FileManager.getInstance().getMovieLogFileList(all_load_dirs, top_level)
+			file_list += FileManager.getInstance().getMovieLogFileList(self.load_dir, top_level)
 		current_sort_mode = self.getSortMode(self.load_dir)
 		sort_mode, sort_order = sort_modes[current_sort_mode][0]
 		self.file_list = header_list + self.sortList(file_list, sort_mode, sort_order)
 
+		all_load_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [self.load_dir])
 		self.file_list_index = {}
 		for index, afile in enumerate(self.file_list):
 			if afile[FILE_IDX_TYPE] == FILE_TYPE_DIR:
@@ -433,12 +431,7 @@ class MovieList(TemplatedMultiContentComponent, Sorting, ServiceCenter):
 			date_text = ""
 			if path in self.lock_list:
 				file_op = self.lock_list[path]
-				if file_op == FILE_OP_COPY:
-					date_text = _("COPYING")
-				elif file_op == FILE_OP_MOVE:
-					date_text = _("MOVING")
-				elif file_op == FILE_OP_DELETE:
-					date_text = _("DELETING")
+				date_text = file_op_msg[file_op]
 			else:
 				if file_type in [FILE_TYPE_FILE, FILE_TYPE_DELETED]:
 					if config.plugins.moviecockpit.list_show_mount_points.value:

@@ -117,7 +117,7 @@ class CockpitPlayer(
 
 	def __serviceStarted(self):
 		logger.info("self.is_closing: %s", self.is_closing)
-		if not self.service_started and not self.is_closing:
+		if not self.service_started and not self.is_closing and hasattr(self, "config_plugins_plugin"):
 			self.service_started = True
 			self.downloadCuesheet()
 			if self.config_plugins_plugin.movie_resume_at_last_pos.value:

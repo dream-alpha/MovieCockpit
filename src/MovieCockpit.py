@@ -63,6 +63,7 @@ from .Loading import Loading
 from .RecordingInfo import RecordingInfo
 from .BufferingProgress import BufferingProgress
 from .FileUtils import createDirectory
+from .PathUtils import getMoveFromTrashcanTarget
 
 
 class MovieCockpitSummary(Screen):
@@ -131,6 +132,7 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 		logger.info("self.last_service: %s", self.last_service.toString() if self.last_service else None)
 		self.loading.start()
 		FileManager.getInstance().onDatabaseLoaded(self.loadList)
+		FileManager.getInstance().onDatabaseChanged(self.loadList)
 
 	def loadList(self):
 		logger.info("return_dir: %s, return_path: %s", self.return_dir, self.return_path)
@@ -148,6 +150,7 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 	def onDialogHide(self):
 		logger.info("self.return_path: %s", self.return_path)
 		FileManager.getInstance().onDatabaseLoaded()
+		FileManager.getInstance().onDatabaseChanged()
 
 	def createSummary(self):
 		return MovieCockpitSummary
@@ -301,12 +304,15 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 				title += _("trashcan")
 			else:
 				title += _("Videos")
-				bookmarks = MountCockpit.getInstance().getMountedBookmarks(ID)
-				for bookmark in bookmarks:
-					if current_dir.startswith(bookmark):
-						title_dir = current_dir[len(bookmark) + 1:]
-				if title_dir:
-					title += " - " + title_dir
+			bookmarks = MountCockpit.getInstance().getMountedBookmarks(ID)
+			for bookmark in bookmarks:
+				if current_dir.startswith(bookmark):
+					title_dir = current_dir[len(bookmark) + 1:]
+					if title_dir.startswith("trashcan"):
+						title_dir = title_dir[len("trashcan") + 1:]
+					break
+			if title_dir:
+				title += " - " + title_dir
 		self.setTitle(title)
 
 	def updateSortModeDisplay(self):
@@ -317,12 +323,10 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 	def toggleSortMode(self):
 		self.movie_list.toggleSortMode(self.return_dir)
 		self.movie_list.loadList(self.return_dir, self.return_path)
-		self.updateSortModeDisplay()
 
 	def toggleSortOrder(self):
 		self.movie_list.toggleSortOrder(self.return_dir)
 		self.movie_list.loadList(self.return_dir, self.return_path)
-		self.updateSortModeDisplay()
 
 	def resetProgress(self):
 		selection_list = self.movie_list.getSelectionList()
@@ -497,11 +501,10 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 	def createMovieList(self, file_list):
 		file_names = ""
 		movies = len(file_list)
-		for i, path in enumerate(file_list):
+		for i, file_name in enumerate(file_list):
 			if i >= 5 and movies > 5:  # only show first 5 entries in file_list
-				file_names += " ..."
+				file_names += "\n..."
 				break
-			file_name = self.movie_list.getFile(path)[FILE_IDX_NAME]
 			file_names += "\n" + file_name
 		return file_names
 
@@ -513,30 +516,13 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 		selection_list = self.movie_list.getSelectionList()
 		for path in selection_list:
 			logger.debug("path: %s", path)
+			afile = self.movie_list.getFile(path)
 			if not path.endswith("trashcan") and not path.endswith(".."):
-				afile = self.movie_list.getFile(path)
+				self.file_ops_list.append((FILE_OP_DELETE, path, None))
 				if "/trashcan" in path or afile[FILE_IDX_TYPE] == FILE_TYPE_DELETED:
-					if afile[FILE_IDX_TYPE] == FILE_TYPE_DIR:
-						all_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [path])
-						for adir in all_dirs:
-							self.file_ops_list.append((FILE_OP_DELETE, adir, None))
-					else:
-						self.file_ops_list.append((FILE_OP_DELETE, path, None))
-					self.file_delete_list.append(path)
-				else:
-					bookmark = MountCockpit.getInstance().getBookmark(ID, path)
-					if afile[FILE_IDX_TYPE] == FILE_TYPE_DIR:
-						all_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [path])
-						for adir in all_dirs:
-							bookmark = MountCockpit.getInstance().getBookmark(ID, adir)
-							sub_dir = os.path.relpath(adir, bookmark)
-							trashcan_path = os.path.dirname(os.path.join(bookmark, "trashcan", sub_dir))
-							self.file_ops_list.append((FILE_OP_MOVE, adir, trashcan_path))
-					else:
-						sub_dir = os.path.relpath(path, bookmark)
-						trashcan_path = os.path.dirname(os.path.join(bookmark, "trashcan", sub_dir))
-						self.file_ops_list.append((FILE_OP_MOVE, path, trashcan_path))
-
+					file_name = os.path.splitext(os.path.basename(path))[0]
+					if file_name not in self.file_delete_list:
+						self.file_delete_list.append(file_name)
 				if isRecording(path):
 					self.recordings_to_stop.append(path)
 
@@ -571,15 +557,8 @@ class MovieCockpit(Screen, HelpableScreen, Actions, CutList):
 		selection_list = self.movie_list.getSelectionList()
 		for path in selection_list:
 			if not path.endswith("..") and not isRecording(path):
-				afile = self.movie_list.getFile(path)
-				if afile[FILE_IDX_TYPE] == FILE_TYPE_DIR:
-					all_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [path])
-					for adir in all_dirs:
-						target_dir = os.path.dirname(adir.replace("/trashcan", "", 1))
-						file_ops_list.append((FILE_OP_MOVE, adir, target_dir))
-				else:
-					target_dir = os.path.dirname(path.replace("/trashcan", "", 1))
-					file_ops_list.append((FILE_OP_MOVE, path, target_dir))
+				target_dir = getMoveFromTrashcanTarget(path)
+				file_ops_list.append((FILE_OP_MOVE, path, target_dir))
 		self.execFileOps(file_ops_list)
 
 	def moveMovies(self):

@@ -181,24 +181,22 @@
 		<widget name="state_pic" position="0,0" size="100,100" transparent="1"/>
 		<widget backgroundColor="#000000" font="Regular;40" halign="center" name="state" position="0,110" size="100,54" transparent="1" valign="center"/>
 	</screen>
-	<screen name="MVCRecordingInfo" position="center,110" size="1800,930">
-		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="300,70"/>
-		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="310,5" size="300,70"/>
-		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="610,5" size="300,70"/>
-		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="910,5" size="300,70"/>
-		<widget backgroundColor="#ff0000" font="Regular;30" foregroundColor="#ffffff" halign="center" name="key_red" position="10,5" shadowColor="#000000" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1"/>
-		<widget backgroundColor="#669900" font="Regular;30" foregroundColor="#ffffff" halign="center" name="key_green" position="310,5" shadowColor="#000000" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1"/>
-		<widget backgroundColor="#e5b243" font="Regular;30" foregroundColor="#ffffff" halign="center" name="key_yellow" position="610,5" shadowColor="#000000" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1"/>
-		<widget backgroundColor="#3366cc" font="Regular;30" foregroundColor="#ffffff" halign="center" name="key_blue" position="910,5" shadowColor="#000000" shadowOffset="-2,-2" size="300,70" transparent="1" valign="center" zPosition="1"/>
-		<widget font="Regular;34" halign="right" position="1240,0" render="Label" size="400,70" source="global.CurrentTime" valign="center">
-			<convert type="ClockToText">Date</convert>
+	<screen backgroundColor="background" flags="wfNoBorder" name="MVCRecordingInfo" position="center,center" size="1920,1080">
+		<widget font="Bold;32" noWrap="1" position="20,30" render="Label" size="1880,43" source="Title" transparent="1"/>
+		<ePixmap gradient="#ff000000,#131a1d,vertical" position="0,0" size="1920,486" zPosition="-1"/>
+		<eLabel backgroundColor="#131a1d" position="0,486" size="1920,108" zPosition="-1"/>
+		<ePixmap gradient="#131a1d,#ff000000,vertical" position="0,594" size="1920,486" zPosition="-1"/>
+		<widget enableWrapAround="1" position="20,100" render="Listbox" scrollbarMode="showOnDemand" size="1880,800" source="list" transparent="1">
+			<convert type="TemplatedMultiContent"> { "template": [ MultiContentEntryText(pos=(5,0), size=(360,40), flags=RT_VALIGN_CENTER, text=0), MultiContentEntryText(pos=(420,0), size=(1360,40), flags=RT_VALIGN_CENTER, text=1), ], "fonts": [gFont("Regular",30)], "itemHeight":40 } </convert>
 		</widget>
-		<widget font="Regular;34" halign="right" position="1650,0" render="Label" size="120,70" source="global.CurrentTime" valign="center">
-			<convert type="ClockToText">Default</convert>
-		</widget>
-		<widget enableWrapAround="1" position="10,100" render="Listbox" scrollbarMode="showOnDemand" size="1780,800" source="list">
-			<convert type="TemplatedMultiContent"> { "template": [ MultiContentEntryText(pos=(5,0), size=(340,40), flags=RT_VALIGN_CENTER, text=0), MultiContentEntryText(pos=(400,0), size=(1380,40), flags=RT_VALIGN_CENTER, text=1), ], "fonts": [gFont("Regular",30)], "itemHeight":40 } </convert>
-		</widget>
+		<widget font="Regular;26" halign="center" name="key_red" position="0,1030" size="480,35" transparent="1"/>
+		<widget font="Regular;26" halign="center" name="key_green" position="480,1030" size="480,35" transparent="1"/>
+		<widget font="Regular;26" halign="center" name="key_yellow" position="960,1030" size="480,35" transparent="1"/>
+		<widget font="Regular;26" halign="center" name="key_blue" position="1440,1030" size="480,35" transparent="1"/>
+		<eLabel backgroundColor="#ff0000" position="0,1070" size="480,10"/>
+		<eLabel backgroundColor="#669900" position="480,1070" size="480,10"/>
+		<eLabel backgroundColor="#e5b243" position="960,1070" size="480,10"/>
+		<eLabel backgroundColor="#3366cc" position="1440,1070" size="480,10"/>
 	</screen>
 	<screen backgroundColor="#ff000000" flags="wfNoBorder" name="MVCBufferingProgress" position="center,center" size="100,100">
 		<widget alphatest="off" name="pic" position="center,center" size="100,100" transparent="0"/>
@@ -235,7 +233,7 @@
 		<widget font="Regular;30" position="25,135" render="Label" size="1150,40" source="Service" transparent="1" valign="center">
 			<convert type="COCEventName">Description</convert>
 		</widget>
-		<widget font="Regular;26" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="25,135" render="COCRunningText" size="1150,607" size2="1150,547" source="Service" transparent="1">
+		<widget font="Regular;26" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="25,135" render="COCRunningText" size="1150,602" size2="1150,542" source="Service" transparent="1">
 			<convert type="COCEventName">ShortAndExtendedDescription</convert>
 		</widget>
 		<widget font="Regular;26" halign="center" name="key_red" position="0,770" size="300,35" transparent="1"/>

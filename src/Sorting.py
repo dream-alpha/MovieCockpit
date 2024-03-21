@@ -22,13 +22,9 @@ import os
 import time
 from pipes import quote
 from enigma import eConsoleAppContainer
-from Components.config import config
 from Plugins.SystemPlugins.CacheCockpit.FileManager import FileManager
-from Plugins.SystemPlugins.MountCockpit.MountCockpit import MountCockpit
-from .FileManagerUtils import FILE_IDX_SORT
 from .Debug import logger
 from .FileUtils import readFile
-from .Version import ID
 from .ConfigInit import sort_modes
 
 
@@ -45,21 +41,7 @@ class Sorting():
 
 	def getSortMode(self, adir):
 		logger.info("adir: %s", adir)
-		sort = ""
-		timestamp = 0
-		all_dirs = MountCockpit.getInstance().getVirtualDirs(ID, [adir])
-		for bdir in all_dirs:
-			bfile = FileManager.getInstance().getFile("recordings", bdir)
-			if bfile:
-				data = bfile[FILE_IDX_SORT].split(",")
-				if len(data) > 1 and int(data[0]) > timestamp:
-					sort = data[1]
-					timestamp = int(data[0])
-		if not sort:
-			logger.debug("using default sort")
-			sort = config.plugins.moviecockpit.list_sort.value
-		logger.debug("sort: %s", sort)
-		return sort
+		return FileManager.getInstance().getSortMode(adir)
 
 	def writeSortFile(self, adir, sort):
 		logger.info("adir: %s, sort: %s", adir, sort)

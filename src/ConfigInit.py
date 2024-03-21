@@ -24,16 +24,7 @@ from Components.config import config, ConfigSet, ConfigDirectory, ConfigNumber, 
 from Components.Language import language
 from .Debug import logger, log_levels, initLogging
 from .__init__ import _
-from .Autoselect639Language import Autoselect639Language
-
-
-def langListEPG():
-	lang_list = language.getLanguageList()
-	alist = []
-	for item in lang_list:
-		alist.append((item[0][:5], item[1][0]))
-	# logger.debug("alist: %s", str(alist))
-	return alist
+from .LanguageSelection import LanguageSelection
 
 
 # date format is implemented using datetime.strftime
@@ -109,17 +100,6 @@ choices_cover_source = [
 ]
 
 
-def checkList(cfg):
-	for choices in cfg.choices.choices:
-		if cfg.value == choices[0]:
-			return
-	for choices in cfg.choices.choices:
-		if cfg.default == choices[0]:
-			cfg.value = cfg.default
-			return
-	cfg.value = cfg.choices.choices[0][0]
-
-
 def initBookmarks():
 	logger.info("...")
 	bookmarks = []
@@ -129,21 +109,23 @@ def initBookmarks():
 	return bookmarks
 
 
-class ConfigInit():
+class ConfigInit(LanguageSelection):
 
 	def __init__(self):
 		logger.info("...")
-		auto_lang_list = Autoselect639Language().getTranslatedChoicesDictAndSortedListAndDefaults()[1]
+		LanguageSelection.__init__(self)
+		lang = language.getActiveLanguage()
+		logger.debug("lang: %s", lang)
+		lang_choices = self.getLangChoices(lang)
 		config.plugins.moviecockpit = ConfigSubsection()
 		config.plugins.moviecockpit.fake_entry = NoSave(ConfigNothing())
 		config.plugins.moviecockpit.timer_autoclean = ConfigYesNo(default=False)
 		config.plugins.moviecockpit.cover_auto_download = ConfigYesNo(default=False)
 		config.plugins.moviecockpit.cover_fallback = ConfigYesNo(default=True)
-		config.plugins.moviecockpit.cover_language = ConfigSelection(default=language.getActiveLanguage()[:2], choices=auto_lang_list)
 		config.plugins.moviecockpit.cover_size = ConfigSelection(default="w500", choices=["w92", "w185", "w500", "original"])
 		config.plugins.moviecockpit.backdrop_size = ConfigSelection(default="w1280", choices=["w300", "w780", "w1280", "original"])
 		config.plugins.moviecockpit.cover_source = ConfigSelection(default="tvs_id", choices=choices_cover_source)
-		config.plugins.moviecockpit.epglang = ConfigSelection(default=language.getActiveLanguage(), choices=langListEPG())
+		config.plugins.moviecockpit.epglang = ConfigSelection(default=lang[:2], choices=lang_choices)
 		config.plugins.moviecockpit.list_start_home = ConfigYesNo(default=True)
 		config.plugins.moviecockpit.movie_description_delay = ConfigNumber(default=200)
 		config.plugins.moviecockpit.list_show_mount_points = ConfigYesNo(default=False)
@@ -176,5 +158,4 @@ class ConfigInit():
 			config.plugins.moviecockpit.bookmarks.value = initBookmarks()
 			config.plugins.moviecockpit.bookmarks.save()
 
-		checkList(config.plugins.moviecockpit.epglang)
 		initLogging()

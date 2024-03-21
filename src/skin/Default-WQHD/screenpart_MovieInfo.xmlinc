@@ -1,6 +1,6 @@
 	<widget position="0,0" render="COCCover" size="840,631" source="Service"/>
 	<ePixmap gradient="$transparent,$gradient,vertical" position="0,333" size="840,297" zPosition="1"/>
-	<widget font="Bold;43" position="13,393" render="Label" size="827,120" source="Service" transparent="1" valign="center" zPosition="2">
+	<widget font="Bold;43" position="13,393" render="Label" size="827,107" source="Service" transparent="1" valign="center" zPosition="2">
 		<convert type="COCEventName">Name</convert>
 	</widget>
 	<widget font="Bold;40" position="13,520" render="Label" size="373,45" source="Service" transparent="1" zPosition="2">
