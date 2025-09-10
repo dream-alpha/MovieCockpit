@@ -1,0 +1,10 @@
+	<screen backgroundColor="background" flags="wfNoBorder" name="MVCMovieCockpit" position="center,center" size="1920,1080">
+		<xmlinc file="screenpart_TitleOnly" source="Title"/>
+		<xmlinc file="screenpart_Background"/>
+		<widget alphatest="blend" name="pic_loading" position="559,421" size="100,100" zPosition="3"/>
+		<xmlinc file="screenpart_MovieList"/>
+		<eLabel font="Bold;27" halign="left" position="8,1028" size="15,33" text="&lt;" transparent="1"/>
+		<eLabel font="Bold;27" halign="right" position="1898,1028" size="15,33" text="&gt;" transparent="1"/>
+		<xmlinc file="screenpart_MovieInfo" position="1260,90"/>
+		<xmlinc file="screenpart_4Buttons_name" position="0,1030" width="480"/>
+	</screen>

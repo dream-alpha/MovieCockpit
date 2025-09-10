@@ -1,0 +1,4 @@
+	<screen backgroundColor="$transparent" flags="wfNoBorder" name="MVCBufferingProgress" position="center,center" size="100,100">
+		<widget alphatest="off" name="pic" position="center,center" size="100,100" transparent="0"/>
+	</screen>
+	<xmlinc file="screen_BufferingProgressSummary"/>

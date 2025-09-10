@@ -1,0 +1,14 @@
+	<widget position="1235,100" render="COCCover" size="560,270" source="Service"/>
+	<widget font="Regular;32" position="1235,375" render="Label" size="560,70" source="Service" valign="center">
+		<convert type="COCEventName">Name</convert>
+	</widget>
+	<widget font="Regular;30" position="1235,455" render="Label" size="290,35" source="Service">
+		<convert type="COCServiceTime">Duration</convert>
+		<convert type="COCClockToText">InMinutes</convert>
+	</widget>
+	<widget font="Regular;30" position="1235,495" render="Label" size="560,70" source="Service" valign="center">
+		<convert type="COCEventName">Description</convert>
+	</widget>
+	<widget font="Regular;26" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="1235,510" render="COCRunningText" size="560,345" size2="560,285" source="Service">
+		<convert type="COCEventName">ShortAndExtendedDescription</convert>
+	</widget>
