@@ -1,0 +1,243 @@
+<?xml version="1.0" ?>
+<skin>
+	<listboxcontent>
+		<config offPixmap="skin_default/switch_off.svg" onPixmap="skin_default/switch_on.svg" size="80,43"/>
+	</listboxcontent>
+	<screen name="MVCMovieCockpit" position="center,147" size="2400,1240" title="">
+		<eLabel backgroundColor="grey" position="13,107" size="2373,1"/>
+		<eLabel backgroundColor="grey" position="1627,107" size="1,1060"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="13,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="413,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="813,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="1213,7" size="400,93"/>
+		<widget backgroundColor="#ff0000" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_red" position="13,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#669900" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_green" position="413,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#e5b243" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_yellow" position="813,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#3366cc" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_blue" position="1213,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget font="Regular;40" halign="left" name="level" position="1640,0" size="107,93" valign="center"/>
+		<widget font="Regular;45" halign="right" position="1653,0" render="Label" size="533,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Date</convert>
+		</widget>
+		<widget font="Regular;45" halign="right" position="2200,0" render="Label" size="160,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget alphatest="blend" name="pic_loading" position="747,563" size="133,133" zPosition="3"/>
+		<widget enableWrapAround="1" name="list" position="13,120" scrollbarMode="showAlways" scrollbarWidth="7" size="1600,1020"/>
+		<widget position="1647,133" render="COCCover" size="747,360" source="Service"/>
+		<widget font="Regular;43" position="1647,500" render="Label" size="747,93" source="Service" valign="center">
+			<convert type="COCEventName">Name</convert>
+		</widget>
+		<widget font="Regular;40" position="1647,607" render="Label" size="387,47" source="Service">
+			<convert type="COCServiceTime">Duration</convert>
+			<convert type="COCClockToText">InMinutes</convert>
+		</widget>
+		<widget font="Regular;40" position="1647,660" render="Label" size="747,93" source="Service" valign="center">
+			<convert type="COCEventName">Description</convert>
+		</widget>
+		<widget font="Regular;35" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="1647,680" render="COCRunningText" size="747,460" size2="747,380" source="Service">
+			<convert type="COCEventName">ShortAndExtendedDescription</convert>
+		</widget>
+		<eLabel backgroundColor="grey" position="13,1167" size="2373,1"/>
+		<widget font="Regular;35" halign="left" position="27,1180" render="Label" size="1600,40" source="DiskSpace" valign="center">
+			<convert type="COCDiskSpaceInfo">SpaceInfo</convert>
+		</widget>
+		<widget font="Regular;35" halign="left" name="sort_mode" position="1647,1180" size="747,40" valign="center"/>
+	</screen>
+	<screen name="MVCCockpitContextMenu" position="center,center" size="1120,973" title="">
+		<widget enableWrapAround="1" itemHeight="60" position="13,13" render="Listbox" scrollbarMode="showOnDemand" size="1093,907" source="menu">
+			<convert type="StringList"/>
+		</widget>
+	</screen>
+	<screen flags="wfNoBorder" name="MVCCockpitPlayer" position="0,1100" size="2560,300">
+		<ePixmap alphatest="off" pixmap="skin_default/infobar.png" position="0,0" size="2560,300" zPosition="-1"/>
+		<widget font="Regular;53" noWrap="1" position="307,17" render="Label" size="1467,60" source="Service" transparent="1">
+			<convert type="COCEventName">Name</convert>
+		</widget>
+		<ePixmap pixmap="skin_default/icons/ico_dolby_off.png" position="1947,53" size="99,47"/>
+		<widget pixmap="skin_default/icons/ico_dolby_on.png" position="1947,53" render="Pixmap" size="99,47" source="Service" zPosition="1">
+			<convert type="COCServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<ePixmap pixmap="skin_default/icons/ico_format_off.png" position="2067,53" size="99,47"/>
+		<widget pixmap="skin_default/icons/ico_format_on.png" position="2067,53" render="Pixmap" size="99,47" source="Service" zPosition="1">
+			<convert type="COCServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<widget pixmap="skin_default/icons/ico_hd_off.png" position="2187,53" render="Pixmap" size="99,47" source="Service">
+			<convert type="COCServiceInfo">VideoWidth</convert>
+			<convert type="ValueRange">0,720</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<widget pixmap="skin_default/icons/ico_hd_on.png" position="2187,53" render="Pixmap" size="99,47" source="Service" zPosition="1">
+			<convert type="COCServiceInfo">VideoWidth</convert>
+			<convert type="ValueRange">721,1980</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<widget pixmap="Default-FHD/skin_default/icons/uhd.svg" position="2187,53" render="Pixmap" size="99,47" source="Service" zPosition="1">
+			<convert type="COCServiceInfo">VideoWidth</convert>
+			<convert type="ValueRange">2160,3840</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<widget pixmap="Default-FHD/skin_default/icons/hdr.svg" position="2307,53" render="Pixmap" size="99,47" source="Service" zPosition="1">
+			<convert type="COCServiceInfo">IsHdr</convert>
+			<convert type="ConditionalShowHide"/>
+		</widget>
+		<widget pixmap="skin_default/icons/icon_rec.png" position="2427,53" render="Pixmap" size="99,47" source="session.RecordState">
+			<convert type="ConditionalShowHide">Blink</convert>
+		</widget>
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/player.svg" position="67,107" size="176,176" zPosition="2"/>
+		<widget backgroundColor="background" font="Regular;45" position="307,117" render="Label" size="187,53" source="Service" transparent="1">
+			<convert type="COCServicePosition">Position</convert>
+		</widget>
+		<eLabel backgroundColor="grey" position="493,191" size="1773,5"/>
+		<widget pointer="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/progress.png:1773,0" position="493,187" render="PositionGauge" size="1773,13" source="Service" transparent="1" zPosition="2">
+			<convert type="COCServicePosition">Gauge</convert>
+		</widget>
+		<widget pointer="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/progress_before.png:1773,0" position="493,187" render="PositionGauge" size="1773,13" source="Service" transparent="1" zPosition="3">
+			<convert type="COCBeforeTSPosition">Gauge</convert>
+		</widget>
+		<widget pointer="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/progress_rec.png:1773,0" position="493,187" render="PositionGauge" size="1773,13" source="Service" transparent="1" zPosition="1">
+			<convert type="COCRecordPosition">Gauge</convert>
+		</widget>
+		<widget backgroundColor="background" font="Regular;45" halign="right" position="2320,117" render="Label" size="187,53" source="Service" transparent="1">
+			<convert type="COCServicePosition">Remaining</convert>
+		</widget>
+		<widget font="Regular;48" foregroundColor="yellow" position="1300,221" render="Label" size="400,53" source="Service" transparent="1">
+			<convert type="COCMovieInfo">MovieDuration</convert>
+			<convert type="COCClockToText">InMinutes</convert>
+		</widget>
+		<widget backgroundColor="background" font="Regular;45" position="307,221" render="Label" size="160,53" source="global.CurrentTime" transparent="1">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget backgroundColor="background" font="Regular;45" halign="right" position="2320,221" render="Label" size="187,53" source="Service" transparent="1">
+			<convert type="COCServicePosition">EndTime,ShowNoSeconds</convert>
+		</widget>
+	</screen>
+	<screen id="3" name="MVCCockpitPlayerSummary" position="0,0" size="400,240">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/display_bg.png" position="0,0" size="400,240" zPosition="-1"/>
+		<widget font="Display;60" halign="center" position="5,5" render="Label" size="390,125" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCEventName">Name</convert>
+		</widget>
+		<widget borderWidth="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/progress_rec_lcd.png" position="center,140" render="Progress" size="380,15" source="parent.Service" transparent="1" zPosition="2">
+			<convert type="COCRecordPosition">Position</convert>
+		</widget>
+		<widget borderWidth="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/progress_before_lcd.png" position="center,140" render="Progress" size="380,15" source="parent.Service" transparent="1" zPosition="3">
+			<convert type="COCBeforeTSPosition">Position</convert>
+		</widget>
+		<widget borderWidth="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/progress_lcd.png" position="center,140" render="Progress" size="380,15" source="parent.Service" transparent="1" zPosition="2">
+			<convert type="COCServicePosition">Position</convert>
+		</widget>
+		<widget font="Display;75" halign="left" position="5,160" render="Label" size="235,80" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCServicePosition">EndTime,ShowNoSeconds</convert>
+		</widget>
+		<widget font="Display;75" halign="right" position="240,160" render="Label" size="155,80" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCServicePosition">Remaining,ShowNoSeconds</convert>
+		</widget>
+	</screen>
+	<screen name="MVCConfigScreen" position="center,147" size="2400,1240" title="">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="13,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="413,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="813,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="1213,7" size="400,93"/>
+		<widget backgroundColor="#ff0000" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_red" position="13,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#669900" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_green" position="413,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#e5b243" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_yellow" position="813,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#3366cc" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_blue" position="1213,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget font="Regular;45" halign="right" position="1653,0" render="Label" size="533,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Date</convert>
+		</widget>
+		<widget font="Regular;45" halign="right" position="2200,0" render="Label" size="160,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<eLabel backgroundColor="#808080" position="13,107" size="2373,1"/>
+		<widget enableWrapAround="1" itemHeight="60" name="config" position="13,120" scrollbarMode="showOnDemand" size="2373,840"/>
+		<eLabel backgroundColor="#808080" position="13,973" size="2373,1"/>
+		<widget font="Regular;43" halign="center" position="13,987" render="Label" size="2373,240" source="help" valign="center"/>
+	</screen>
+	<screen name="MVCFileManagerProgress" position="center,center" size="1627,487" title="">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="13,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="413,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="813,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="1213,7" size="400,93"/>
+		<widget backgroundColor="#ff0000" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_red" position="13,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#669900" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_green" position="413,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#e5b243" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_yellow" position="813,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#3366cc" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_blue" position="1213,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<eLabel backgroundColor="grey" position="13,100" size="1600,1"/>
+		<widget font="Regular;43" halign="left" name="operation" position="13,127" size="1600,57" transparent="1"/>
+		<widget font="Regular;43" halign="left" name="name" position="13,200" size="1600,57" transparent="1"/>
+		<widget name="slider1" position="13,271" size="1600,33"/>
+		<widget font="Regular;43" halign="left" name="status" position="13,320" size="1600,57" transparent="1"/>
+		<widget font="Regular;35" halign="left" position="13,407" render="Label" size="1600,47" source="DiskSpace">
+			<convert type="COCDiskSpaceInfo">SpaceInfo</convert>
+		</widget>
+	</screen>
+	<screen backgroundColor="#ff000000" flags="wfNoBorder" name="ScreenPVRState" position="center,center" size="133,213" zPosition="1000">
+		<widget name="state_pic" position="0,0" size="133,133" transparent="1"/>
+		<widget backgroundColor="#0528343b" font="Regular;53" halign="center" name="state" position="0,147" size="133,72" transparent="1" valign="center"/>
+	</screen>
+	<screen name="MVCRecordingInfo" position="center,147" size="2400,1240">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="13,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="413,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="813,7" size="400,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="1213,7" size="400,93"/>
+		<widget backgroundColor="#ff0000" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_red" position="13,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#669900" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_green" position="413,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#e5b243" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_yellow" position="813,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#3366cc" font="Regular;40" foregroundColor="#ffffff" halign="center" name="key_blue" position="1213,7" shadowColor="#000000" shadowOffset="-2,-2" size="400,93" transparent="1" valign="center" zPosition="1"/>
+		<widget font="Regular;45" halign="right" position="1653,0" render="Label" size="533,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Date</convert>
+		</widget>
+		<widget font="Regular;45" halign="right" position="2200,0" render="Label" size="160,93" source="global.CurrentTime" valign="center">
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget enableWrapAround="1" position="13,133" render="Listbox" scrollbarMode="showOnDemand" size="2373,1067" source="list">
+			<convert type="TemplatedMultiContent">{"template":[MultiContentEntryText(pos=(7,0),size=(480,53),flags=RT_VALIGN_CENTER,text=0),MultiContentEntryText(pos=(560,0),size=(1813,53),flags=RT_VALIGN_CENTER,text=1),],"fonts":[gFont("Regular",40)],"itemHeight":53}</convert>
+		</widget>
+	</screen>
+	<screen backgroundColor="#ff000000" flags="wfNoBorder" name="MVCBufferingProgress" position="center,center" size="133,133">
+		<widget alphatest="off" name="pic" position="center,center" size="133,133" transparent="0"/>
+	</screen>
+	<screen id="3" name="MVCBufferingProgressSummary" position="0,0" size="400,240">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/display_bg.png" position="0,0" size="400,240" zPosition="-1"/>
+		<widget name="lcd_pic" position="150,70" size="100,100" transparent="1"/>
+	</screen>
+	<screen id="3" name="MVCMovieCockpitSummary" position="0,0" size="400,240">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/Other-WQHD/images/display_bg.png" position="0,0" size="400,240" zPosition="-1"/>
+		<widget font="Display;60" halign="center" position="5,5" render="Label" size="390,130" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCEventName">Name</convert>
+		</widget>
+		<eLabel backgroundColor="white" position="10,145" size="380,2"/>
+		<widget font="Display;75" position="5,160" render="Label" size="300,75" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCMovieInfo">FileSize</convert>
+		</widget>
+		<widget font="Display;75" halign="right" position="225,160" render="Label" size="170,75" source="parent.Service" transparent="1" valign="center">
+			<convert type="COCServiceTime">Duration</convert>
+			<convert type="COCClockToText">InMinutes</convert>
+		</widget>
+		<widget name="background" position="0,0" size="400,240" zPosition="2"/>
+		<widget name="lcd_pic_loading" position="150,70" size="100,100" transparent="1" zPosition="3"/>
+	</screen>
+	<screen name="MVCMovieInfoEPG" position="center,center" size="1600,1093" title="">
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="13,7" size="393,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="407,7" size="393,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="800,7" size="393,93"/>
+		<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="1193,7" size="393,93"/>
+		<eLabel backgroundColor="grey" position="13,113" size="1573,1"/>
+		<widget backgroundColor="#9f1313" font="Regular;40" foregroundColor="white" halign="center" name="key_red" position="13,7" shadowColor="black" shadowOffset="-2,-2" size="393,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#1f771f" font="Regular;40" foregroundColor="white" halign="center" name="key_green" position="407,7" shadowColor="black" shadowOffset="-2,-2" size="393,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#a08500" font="Regular;40" foregroundColor="white" halign="center" name="key_yellow" position="800,7" shadowColor="black" shadowOffset="-2,-2" size="393,93" transparent="1" valign="center" zPosition="1"/>
+		<widget backgroundColor="#18188b" font="Regular;40" foregroundColor="white" halign="center" name="key_blue" position="1193,7" shadowColor="black" shadowOffset="-2,-2" size="393,93" transparent="1" valign="center" zPosition="1"/>
+		<widget font="Regular;40" position="13,140" render="Label" size="1573,53" source="Service">
+			<convert type="COCServiceTime">Duration</convert>
+			<convert type="COCClockToText">InMinutes</convert>
+		</widget>
+		<widget font="Regular;40" position="13,200" render="Label" size="1573,53" source="Service" valign="center">
+			<convert type="COCEventName">Description</convert>
+		</widget>
+		<widget font="Regular;35" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="13,200" render="COCRunningText" size="1573,800" size2="1573,720" source="Service">
+			<convert type="COCEventName">ShortAndExtendedDescription</convert>
+		</widget>
+		<eLabel backgroundColor="grey" position="13,1053" size="1573,1"/>
+	</screen>
+</skin>

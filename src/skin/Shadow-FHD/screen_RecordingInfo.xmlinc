@@ -1,0 +1,17 @@
+	<screen backgroundColor="background" flags="wfNoBorder" name="MVCRecordingInfo" position="center,center" size="1920,1080">
+		<xmlinc file="screenpart_TitleOnly" source="Title"/>
+		<xmlinc file="screenpart_Background"/>
+		<widget enableWrapAround="1" position="20,100" render="Listbox" scrollbarMode="showOnDemand" size="1880,800" source="list" transparent="1">
+			<convert type="TemplatedMultiContent">
+				{
+				"template": [
+					MultiContentEntryText(pos=(5,0), size=(360,40), flags=RT_VALIGN_CENTER, text=0),
+					MultiContentEntryText(pos=(420,0), size=(1360,40), flags=RT_VALIGN_CENTER, text=1),
+				],
+				"fonts": [gFont("Regular",30)],
+				"itemHeight":40
+				}
+			</convert>
+		</widget>
+		<xmlinc file="screenpart_4Buttons_name" position="0,eval($screen_height-50)" width="eval($screen_width/$4)"/>
+	</screen>

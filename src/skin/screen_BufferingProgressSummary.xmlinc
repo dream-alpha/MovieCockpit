@@ -1,0 +1,4 @@
+	<screen id="3" name="MVCBufferingProgressSummary" position="0,0" size="400,240">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/%RESOLUTION%/images/display_bg.png" position="0,0" size="400,240" zPosition="-1"/>
+		<widget name="lcd_pic" position="150,70" size="100,100" transparent="1"/>
+	</screen>

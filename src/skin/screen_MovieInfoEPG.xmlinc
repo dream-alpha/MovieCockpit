@@ -1,0 +1,15 @@
+	<screen name="MVCMovieInfoEPG" position="center,center" size="1200,820" title="">
+		<xmlinc file="screenpart_ButtonSmall"/>
+		<xmlinc file="screenpart_ButtonSmall_name"/>
+		<widget font="Regular;30" position="10,105" render="Label" size="1180,40" source="Service">
+			<convert type="COCServiceTime">Duration</convert>
+			<convert type="COCClockToText">InMinutes</convert>
+		</widget>
+		<widget font="Regular;30" position="10,150" render="Label" size="1180,40" source="Service" valign="center">
+			<convert type="COCEventName">Description</convert>
+		</widget>
+		<widget font="Regular;26" foregroundColor="grey" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="10,150" render="COCRunningText" size="1180,600" size2="1180,540" source="Service">
+			<convert type="COCEventName">ShortAndExtendedDescription</convert>
+		</widget>
+		<eLabel backgroundColor="grey" position="10,790" size="1180,1"/>
+	</screen>

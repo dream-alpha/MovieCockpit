@@ -1,0 +1,15 @@
+	<widget position="0,0" render="COCCover" size="630,473" source="Service"/>
+	<ePixmap gradient="$transparent,$gradient,vertical" position="0,250" size="630,223" zPosition="1"/>
+	<widget font="Bold;32" position="10,295" render="Label" size="620,80" source="Service" transparent="1" valign="center" zPosition="2">
+		<convert type="COCEventName">Name</convert>
+	</widget>
+	<widget font="Bold;30" position="10,390" render="Label" size="280,34" source="Service" transparent="1" zPosition="2">
+		<convert type="COCServiceTime">Duration</convert>
+		<convert type="COCClockToText">InMinutes</convert>
+	</widget>
+	<widget font="Bold;30" noWrap="1" position="10,468" render="Label" size="620,34" source="Service" transparent="1" valign="center">
+		<convert type="COCEventName">Description</convert>
+	</widget>
+	<widget font="Regular;25" options="movetype=swimming, direction=top, startpoint=0, startdelay=4000, wrap=1, always=0, repeat=1, oneshot=1, steptime=100" position="10,468" render="COCRunningText" size="620,440" size2="620,375" source="Service" transparent="1">
+		<convert type="COCEventName">ShortAndExtendedDescription</convert>
+	</widget>

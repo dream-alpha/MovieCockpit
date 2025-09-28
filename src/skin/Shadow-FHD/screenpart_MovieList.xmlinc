@@ -1,0 +1,7 @@
+	<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/sort.svg" position="38,80" size="38,38"/>
+	<widget font="Regular;21" halign="left" name="sort_mode" position="83,80" size="563,38" transparent="1" valign="center"/>
+	<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MovieCockpit/skin/images/hardisk.svg" position="563,80" size="38,38"/>
+	<widget font="Regular;21" halign="left" position="608,80" render="Label" size="1200,38" source="DiskSpace" transparent="1" valign="center">
+		<convert type="COCDiskSpaceInfo">SpaceInfo</convert>
+	</widget>
+	<widget enableWrapAround="1" name="list" position="30,135" scrollbarMode="showAlways" scrollbarWidth="5" size="1200,855" transparent="1"/>

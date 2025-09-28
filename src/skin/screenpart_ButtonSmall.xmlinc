@@ -1,0 +1,5 @@
+	<ePixmap pixmap="Default-FHD/skin_default/buttons/red.svg" position="10,5" size="295,70"/>
+	<ePixmap pixmap="Default-FHD/skin_default/buttons/green.svg" position="305,5" size="295,70"/>
+	<ePixmap pixmap="Default-FHD/skin_default/buttons/yellow.svg" position="600,5" size="295,70"/>
+	<ePixmap pixmap="Default-FHD/skin_default/buttons/blue.svg" position="895,5" size="295,70"/>
+	<eLabel backgroundColor="grey" position="10,85" size="1180,1"/>

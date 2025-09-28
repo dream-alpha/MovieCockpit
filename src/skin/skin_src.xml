@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<skin>
+	<xmlinc file="listboxcontent"/>
+	<xmlinc file="screen_MovieCockpit"/>
+	<xmlinc file="screen_CockpitContextMenu"/>
+	<xmlinc file="screen_CockpitPlayer"/>
+	<xmlinc file="screen_ConfigScreen"/>
+	<xmlinc file="screen_FileManagerProgress"/>
+	<xmlinc file="screen_ScreenPVRState"/>
+	<xmlinc file="screen_RecordingInfo"/>
+	<xmlinc file="screen_BufferingProgress"/>
+	<xmlinc file="screen_MovieCockpitSummary"/>
+	<xmlinc file="screen_MovieInfoEPG"/>
+</skin>

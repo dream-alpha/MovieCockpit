@@ -1,0 +1,16 @@
+	<screen name="MVCMovieCockpit" position="center,110" size="1800,930" title="">
+		<eLabel backgroundColor="grey" position="10,80" size="1780,1"/>
+		<eLabel backgroundColor="grey" position="1220,80" size="1,795"/>
+		<xmlinc file="screenpart_ColorButtons" position="10,5" width="300"/>
+		<xmlinc file="screenpart_ColorButtonsLabels" position="10,5" width="300"/>
+		<xmlinc file="screenpart_ColorButtonsLevel"/>
+		<xmlinc file="screenpart_DateTime"/>
+		<widget alphatest="blend" name="pic_loading" position="560,422" size="100,100" zPosition="3"/>
+		<xmlinc file="screenpart_MovieList"/>
+		<xmlinc file="screenpart_MovieInfo"/>
+		<eLabel backgroundColor="grey" position="10,875" size="1780,1"/>
+		<widget font="Regular;26" halign="left" position="20,885" render="Label" size="1200,30" source="DiskSpace" valign="center">
+			<convert type="COCDiskSpaceInfo">SpaceInfo</convert>
+		</widget>
+		<widget font="Regular;26" halign="left" name="sort_mode" position="1235,885" size="560,30" valign="center"/>
+	</screen>
