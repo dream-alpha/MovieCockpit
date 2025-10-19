@@ -19,7 +19,6 @@
 
 
 from Components.config import config
-from .Debug import logger
 from .FileUtils import readFile, writeFile
 from .CutListUtils import ptsToSeconds, secondsToPts
 
@@ -45,7 +44,6 @@ class ParserMetaFile():
         self.meta_list = self.readMeta(self.meta_path)
         if self.meta_list:
             self.meta = self.list2dict(self.meta_list, self.meta_keys)
-            logger.debug("self.meta: %s", self.meta)
             if self.meta and self.meta["length"]:
                 self.meta["length"] = ptsToSeconds(self.meta["length"])
             self.xmeta_list = self.readMeta(self.xmeta_path)
@@ -63,11 +61,15 @@ class ParserMetaFile():
                 try:
                     adict[key] = int(alist[i])
                 except ValueError:
-                    adict[key] = alist[i]
+                    if alist[i]:
+                        adict[key] = alist[i]
+                    elif key in ["rec_time", "length", "size"]:
+                        adict[key] = 0
+                    else:
+                        adict[key] = ""
         return adict
 
     def dict2list(self, adict, keys):
-        logger.debug("adict: %s", adict)
         alist = []
         for key in keys:
             if key in adict:
@@ -83,26 +85,21 @@ class ParserMetaFile():
 
     def getMeta(self):
         self.meta.update(self.xmeta)
-        logger.debug("meta: %s", self.meta)
         return self.meta
 
     def updateMeta(self, meta):
         if "length" in meta:
             meta["length"] = secondsToPts(meta["length"])
         self.meta.update(meta)
-        logger.debug("self.meta: %s", self.meta)
         self.saveMeta()
 
     def saveMeta(self):
         alist = self.dict2list(self.meta, self.meta_keys)
         data = "\n".join([str(line) for line in alist])
-        logger.debug("path: %s, data: %s", self.meta_path, data)
         writeFile(self.meta_path, data)
 
     def updateXMeta(self, xmeta):
-        logger.debug("xmeta: %s", xmeta)
         self.xmeta.update(xmeta)
-        logger.debug("self.xmeta: %s", self.xmeta)
         self.saveXMeta()
 
     def saveXMeta(self):
